@@ -1,13 +1,23 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:radish_app/home_screen.dart';
-import 'package:radish_app/splash_screen.dart';
+import 'package:radish_app/screens/home_screen.dart';
+import 'package:radish_app/screens/splash_screen.dart';
+
+final routerDelegate  = BeamerDelegate(
+    locationBuilder: RoutesLocationBuilder(
+        routes: {
+          '/': (context, state, data) => HomeScreen(),
+          '/home': (context, state, data) => HomeScreen(),
+        }
+    )
+);
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +41,22 @@ class MyApp extends StatelessWidget {
       print('에러가 발생하였습니다.');
       return Text('에러가 발생했습니다', style: TextStyle(color: Colors.red));
     }
-    else if(snapshot.hasData) return HomeScreen();
+    else if(snapshot.hasData) return RadishApp();
     else return SplashScreen();
   }
 }
+
+class RadishApp extends StatelessWidget {
+  const RadishApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      routeInformationParser: BeamerParser(),
+      routerDelegate: routerDelegate ,
+      // 추가 설정
+      backButtonDispatcher: BeamerBackButtonDispatcher(delegate: routerDelegate),
+    );
+  }
+}
+
