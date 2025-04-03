@@ -11,7 +11,7 @@ class HomeLocation extends BeamLocation<BeamState> {
       BeamPage(child: HomeScreen(), key: ValueKey('home'))
     ];
   }
-
+//
   List<Pattern> get pathPatterns => ["/"];
 }
 
