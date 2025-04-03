@@ -6,10 +6,22 @@ import 'package:radish_app/screens/splash_screen.dart';
 final _routerDelegate = BeamerDelegate(
     locationBuilder: BeamerLocationBuilder(
         beamLocations: [
-          HomeLocation()
+          HomeLocation(),
+          LoginLocation(),
+          GalleryLocation()
         ]
-    ),
-    guards: [BeamGuard(pathPatterns: pathPatterns, check: check)]
+    ).call,
+    guards: [
+      BeamGuard(
+        pathPatterns: ['/'],
+        check: (context, location) => true,
+        beamToNamed: (origin, target) => '/login',
+      ),
+      BeamGuard(
+        pathPatterns: ['/gallery'],
+        check: (context, location) => true,  // 항상 통과하도록 설정
+      )
+    ]
 );
 
 void main() {
@@ -28,14 +40,14 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshot) {
           return AnimatedSwitcher(
             duration: Duration(milliseconds: 900),
-            child: _splashLodingWidget(snapshot),
+            child: _splashLoadingWidget(snapshot),
           );
         }
       ),
     );
   }
 
-  Widget _splashLodingWidget(AsyncSnapshot<Object> snapshot) {
+  Widget _splashLoadingWidget(AsyncSnapshot<Object> snapshot) {
     if(snapshot.hasError) {
       print('에러가 발생하였습니다.');
       return Text('에러가 발생했습니다', style: TextStyle(color: Colors.red));
