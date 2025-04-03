@@ -8,7 +8,8 @@ final _routerDelegate = BeamerDelegate(
         beamLocations: [
           HomeLocation()
         ]
-    )
+    ),
+    guards: [BeamGuard(pathPatterns: pathPatterns, check: check)]
 );
 
 void main() {
