@@ -10,7 +10,7 @@ final _routerDelegate = BeamerDelegate(
           LoginLocation(),
           GalleryLocation()
         ]
-    ).call,
+    ),
     guards: [
       BeamGuard(
         pathPatterns: ['/'],
