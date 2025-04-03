@@ -1,14 +1,13 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:radish_app/screens/home_screen.dart';
+import 'package:radish_app/router/location.dart';
 import 'package:radish_app/screens/splash_screen.dart';
 
-final routerDelegate  = BeamerDelegate(
-    locationBuilder: RoutesLocationBuilder(
-        routes: {
-          '/': (context, state, data) => HomeScreen(),
-          '/home': (context, state, data) => HomeScreen(),
-        }
+final _routerDelegate = BeamerDelegate(
+    locationBuilder: BeamerLocationBuilder(
+        beamLocations: [
+          HomeLocation()
+        ]
     )
 );
 
@@ -17,7 +16,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +51,7 @@ class RadishApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routeInformationParser: BeamerParser(),
-      routerDelegate: routerDelegate ,
-      // 추가 설정
-      backButtonDispatcher: BeamerBackButtonDispatcher(delegate: routerDelegate),
+      routerDelegate: _routerDelegate ,
     );
   }
 }
